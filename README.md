@@ -1,0 +1,1 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/y5yjlmqnb0k67tu9?svg=true)](https://ci.appveyor.com/project/MironovED/2-4-pageobject)
