@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class VerificationPage {
     private SelenideElement codeField = $("[data-test-id='code'] .input__control");
-    private SelenideElement verifyButton = $(".button");
+    private SelenideElement verifyButton = $("[data-test-id='action-verify']");
 
     public VerificationPage() {
         codeField.shouldBe(visible);

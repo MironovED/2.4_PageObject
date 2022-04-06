@@ -1,21 +1,31 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import lombok.val;
 
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
+    private SelenideElement heading = $("[data-test-id='dashboard']");
     private ElementsCollection cards = $$(".list__item div");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
+    private ElementsCollection replenishCard = $$("[data-test-id='action-deposit']");
+    private SelenideElement amount = $("[data-test-id='amount']");
+    private SelenideElement fromCard = $("[data-test-id='from']");
+    private SelenideElement topUpButton = $("[data-test-id='action-transfer']");
 
 
     public DashboardPage() {
+        heading.shouldBe(visible);
     }
 
     public int getCardBalance(String id) {
-        // TODO: перебрать все карты и найти по атрибуту data-test-id
+        val text = cards.findBy(text(id)).text();
         return extractBalance(text);
     }
 
@@ -26,12 +36,12 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public int getFirstCardBalance(){
-        val text = cards.first().text();
-        return extractBalance(text);
+    public DashboardPage transferMoney(String inCard, String value, String outCard) {
+        replenishCard.findBy(text(inCard)).click();
+        amount.setValue(value);
+        fromCard.setValue(outCard);
+        topUpButton.click();
+        return new DashboardPage();
     }
-
-
-
 
 }
