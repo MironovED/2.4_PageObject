@@ -26,7 +26,7 @@ public class MoneyTransferTest {
 
         var moneyTransferPage = new MoneyTransferPage();
         moneyTransferPage.cardSelection(firstCard);
-        moneyTransferPage.transferMoney("1000", secondNumberCard);
+        moneyTransferPage.transferMoney("2000", secondNumberCard);
 
         var dashboardPage = new DashboardPage();
         dashboardPage.checkBalanceCard(firstCard);
@@ -36,5 +36,46 @@ public class MoneyTransferTest {
 
     }
 
+    @Test
+    public void checkTransferToTheSecondCard() {
+        open("http://localhost:9999/");
+        var loginPage = new LoginPage();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        verificationPage.validVerify(verificationCode);
+
+        var moneyTransferPage = new MoneyTransferPage();
+        moneyTransferPage.cardSelection(secondCard);
+        moneyTransferPage.transferMoney("4000", firstNumberCard);
+
+        var dashboardPage = new DashboardPage();
+        dashboardPage.checkBalanceCard(firstCard);
+        dashboardPage.checkBalanceCard(secondCard);
+        System.out.println("Баланс карты " + firstNumberCard + " = " + dashboardPage.getCardBalance(firstCard));
+        System.out.println("Баланс карты " + secondNumberCard + " = " + dashboardPage.getCardBalance(secondCard));
+
+    }
+
+    @Test
+    public void checkTransferWhenAmountMoreBalance() {
+        open("http://localhost:9999/");
+        var loginPage = new LoginPage();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        verificationPage.validVerify(verificationCode);
+
+        var moneyTransferPage = new MoneyTransferPage();
+        moneyTransferPage.cardSelection(secondCard);
+        moneyTransferPage.transferMoney("20000", firstNumberCard);
+
+        var dashboardPage = new DashboardPage();
+        dashboardPage.checkBalanceCard(firstCard);
+        dashboardPage.checkBalanceCard(secondCard);
+        System.out.println("Баланс карты " + firstNumberCard + " = " + dashboardPage.getCardBalance(firstCard));
+        System.out.println("Баланс карты " + secondNumberCard + " = " + dashboardPage.getCardBalance(secondCard));
+
+    }
 
 }
