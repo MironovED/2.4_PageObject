@@ -31,9 +31,4 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-//    public void checkBalanceCard(String id) {
-//        String actualBalance = String.valueOf(getCardBalance(id));
-//        cards.find(attribute("data-test-id", id)).shouldHave(text(actualBalance));
-//    }
-
 }
